@@ -1,4 +1,4 @@
-import UserDashboard from "../pages/Dashboard/UserDashboard";
+import UserDashboard from "../pages/dashboard/UserDashboard";
 
 export default function UserRoutes() {
   return (
