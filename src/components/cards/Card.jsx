@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import "./card.scss";
+import "./Card.scss";
 
 export default function Card({ name, photo, aportes, percentage }) {
   // Calcular el total sumando los números del array
