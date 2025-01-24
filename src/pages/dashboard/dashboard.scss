@@ -1,0 +1,94 @@
+.dashboard{
+  padding: 10px 20px;
+  background-color: rgb(131, 184, 174);
+  color: #fff;
+  border-radius: 0 0 16px 16px;
+  height: 200px;
+  &__close{
+    border: 1px solid #fff;
+    padding: 0 10px;
+    border-radius: 8px;
+    width: max-content;
+    cursor: pointer;
+  }
+  &__data{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  &__user{
+    font-size: 20px;
+    font-weight: 600;
+  }
+  &__photo{
+    border: 1px solid #fff;
+    border-radius: 50%;
+    padding: 5px;
+    width: 25px;
+    height: 25px;
+  }
+  &__infoMoney{
+    margin: 25px 0;
+  }
+  &__cash{
+    font-size: 18px;
+    font-weight: 600;
+  }
+  &__cards{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+  }
+  &__free{
+    padding: 5px 30px;
+    border-radius: 8px;
+    background-color: indianred;
+  }
+  &__loans{
+    padding: 5px 30px;
+    border-radius: 8px;
+    background-color: green;
+  }
+  &__amount{
+    margin: 0px;
+  }
+  &__dataList{
+    padding: 10px 20px;
+  }
+  &__actions{
+    display: flex;
+    justify-content: space-around;
+    margin: 40px 30px 0px 30px;
+    padding: 10px 20px;
+  }
+  &__add, &__lend{
+    object-fit: cover;
+    margin-right: 16px;
+    border: 1px solid rgb(131, 184, 174);
+    border-radius: 50%;
+    padding: 5px;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    &:focus{
+        outline: none;
+    }
+    &:active{
+        outline: none; 
+        box-shadow: none; 
+        -webkit-tap-highlight-color: transparent;
+    }
+  }
+  @media (min-width:450px) {
+      border-radius: 16px;
+      margin: 10px auto;
+      max-width: 400px;
+      &__dataList, &__actions{
+          max-width: 400px;
+          margin: 30px auto;
+      }
+      &__actions{
+        margin-bottom: -30px;
+      }
+  }
+}

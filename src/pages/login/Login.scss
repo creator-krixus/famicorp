@@ -1,0 +1,74 @@
+.login{
+  &__wave{
+    background-color: rgb(131, 184, 174);
+    height: 22vh;
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+  }
+  &__logo{
+    background-color: #fff;
+    width: 70px;
+    height: 65px;
+    margin-top: -2px;
+  }
+  &__slogan{
+    color: #fff;
+    font-weight: 800;
+    font-size: 24px;
+    margin-left: -25px;
+  }
+  &__info{
+    text-align: center;
+    padding: 15px;
+  }
+  &__gretting{
+    font-size: 30px;
+    color: #5b5957;
+    font-weight: 800;
+  }
+  &__item{
+      width: 300px;
+      outline: none;
+      border: 1px solid #658e8b;
+      background: #e7f0f0;
+      border-radius: 6px;
+      padding: 10PX;
+      font-size: 16px;
+      margin-bottom: 10px;
+  }
+  &__btn{
+      margin: 15px auto;
+      width: 150px;
+      border: 1px solid #658e8b;
+      background: #e7f0f0;
+      color: #5B5957;
+      cursor: pointer;
+      border-radius: 68px;
+      justify-content: center;
+      align-items: center;
+      height: 43px;
+      font-weight: 600;
+      font-size: 20px;
+      display: flex;
+      outline: none;
+      text-decoration: none;
+      &:focus{
+          outline: none;
+      }
+      &:active{
+          outline: none; 
+          box-shadow: none; 
+          -webkit-tap-highlight-color: transparent;
+      }
+  }
+  @media (min-width:450px) {
+      max-width: 400px;
+      margin: 10px auto;
+      border: 1px solid rgb(131, 184, 174);
+      border-radius: 20px;
+      &__wave{
+        border-radius: 18px 18px 0 0;
+      }
+  }
+}
