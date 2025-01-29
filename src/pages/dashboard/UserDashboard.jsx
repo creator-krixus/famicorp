@@ -12,7 +12,10 @@ import './dashboard.scss'
 export default function UserDashboard() {
   const { user } = UserAuth();
   const [data, setData] = useState([]);
+  const [viewMode, setViewMode] = useState("team");
   const [totalAportes, setTotalAportes] = useState(0);
+  const [loans, setLoans] = useState(0);
+  const [available, setAvailable] = useState(0)
   const navigate = useNavigate();
 
   // Función para obtener datos de Firestore
@@ -25,6 +28,12 @@ export default function UserDashboard() {
         return sum + (user.aportes?.reduce((acc, num) => acc + num, 0) || 0);
       }, 0);
       setTotalAportes(total);
+      // Obtiene todos los préstamos
+      const allLoans = result.map(user => user.loan || []).flat().reduce((acc, num) => acc + num, 0) || 0;
+      setLoans(allLoans);
+      //Obtine lo disponible
+      setAvailable(total - allLoans)
+
     } catch (error) {
       console.error("Error fetching data:", error.message);
     }
@@ -61,32 +70,64 @@ export default function UserDashboard() {
         <div className="dashboard__cards">
           <div className="dashboard__free">
             Disponible
-            <p className="dashboard__amount">$000.000</p>
+            <p className="dashboard__amount">${available.toLocaleString("es-ES")}</p>
           </div>
-          <div className="dashboard__loans">
+          <div className="dashboard__loans" onClick={() => setViewMode("loan")}>
             Prestamos
-            <p className="dashboard__amount">$000.000</p>
+            <p className="dashboard__amount">${loans.toLocaleString("es-ES")}</p>
           </div>
         </div>
       </div>
-      <div className="dashboard__actions">
-        <img className='dashboard__add' src={plus}></img>
-        <img className='dashboard__lend' src={minus}></img>
+      {user?.role === "admin" && (
+        <div className="dashboard__actions">
+          <img className="dashboard__add" src={plus} alt="Add" />
+          <img className="dashboard__lend" src={minus} alt="Lend" />
+        </div>
+      )}
+      {/* 🔹 Botones para cambiar entre vistas */}
+      <div className="dashboard__filters">
+        <span className={viewMode === 'team' ? 'dashboard__active' : 'dashboard__team'} onClick={() => setViewMode("team")}>Socios</span>
+        <span className={viewMode === 'loan' ? 'dashboard__active' : 'dashboard__loan'} onClick={() => setViewMode("loan")}>Préstamos</span>
       </div>
+      {/* 🔹 Mostrar contenido según el valor de "viewMode" */}
       <div className="dashboard__dataList">
-        {data.length > 0 ? (
-          data.map((user) => (
-            <Card
-              key={user.uid}
-              name={user.firstName}
-              photo={user.photoURL || UserLogo}
-              aportes={user.aportes}
-              percentage={totalAportes}
-            />
-          ))
-        ) : (
-          <p>No hay datos disponibles.</p>
-        )}
+        {viewMode === "team" ? (
+          data.length > 0 ? (
+            data.map((user) => (
+              <Card
+                key={user.uid}
+                name={user.firstName}
+                lastName={user.lastName}
+                photo={user.photoURL || UserLogo}
+                aportes={user.aportes}
+                percentage={totalAportes}
+              />
+            ))
+          ) : (
+            <p>No hay datos disponibles.</p>
+          )
+        ) : viewMode === "loan" ? (
+          <div>
+            {data.filter((user) => user.loan).length > 0 ? (
+              data
+                .filter((user) => user.loan)
+                .map((user) => (
+                  <Card
+                    key={user.uid}
+                    name={user.firstName}
+                    lastName={user.lastName}
+                    photo={user.photoURL || UserLogo}
+                    loan={user.loan}
+                    aportes={user.aportes}
+                    percentage={totalAportes}
+                    isLoanView="loan"
+                  />
+                ))
+            ) : (
+              <p>No hay usuarios con préstamos</p>
+            )}
+          </div>
+        ) : null}
       </div>
     </>
   )

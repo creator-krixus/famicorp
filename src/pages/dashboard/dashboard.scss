@@ -4,6 +4,7 @@
   color: #fff;
   border-radius: 0 0 16px 16px;
   height: 200px;
+  margin-bottom: 20px;
   &__close{
     border: 1px solid #fff;
     padding: 0 10px;
@@ -39,26 +40,47 @@
     display: flex;
     justify-content: space-around;
   }
+  &__filters{
+    margin: 50px 5px 0px 5px;
+  }
+  &__team, &__loan{
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 7px;
+    border-radius: 12px 12px 0 0;
+    cursor: pointer;
+  }
+  &__active{
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 2px solid #BD0909;
+    padding: 7px;
+    border-radius: 12px 12px 0 0;
+    cursor: pointer;
+  }
   &__free{
     padding: 5px 30px;
     border-radius: 8px;
-    background-color: indianred;
+    background-color: #BD0909;
   }
   &__loans{
     padding: 5px 30px;
     border-radius: 8px;
-    background-color: green;
+    background-color: rgb(5, 141, 5);
+    cursor: pointer;
   }
   &__amount{
     margin: 0px;
   }
   &__dataList{
     padding: 10px 20px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 5px;
+    border-radius: 0px 12px 12px 12px;
   }
   &__actions{
     display: flex;
     justify-content: space-around;
-    margin: 40px 30px 0px 30px;
+    margin: 40px 30px -25px 30px;
     padding: 10px 20px;
   }
   &__add, &__lend{
@@ -84,8 +106,12 @@
       margin: 10px auto;
       max-width: 400px;
       &__dataList, &__actions{
-          max-width: 400px;
-          margin: 30px auto;
+        max-width: 400px;
+        margin: 30px auto;
+      }
+      &__filters{
+        max-width: 442px;
+        margin: 50px auto -25px auto;
       }
       &__actions{
         margin-bottom: -30px;

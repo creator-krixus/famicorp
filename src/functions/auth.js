@@ -28,6 +28,7 @@ export const logout = async () => {
   try {
     // await auth.signOut();
     await signOut(auth);
+    localStorage.removeItem("loginTime");
   } catch (error) {
     return error;
   }

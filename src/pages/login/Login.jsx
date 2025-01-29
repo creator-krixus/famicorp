@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { signIn } from "../../functions/auth";
+import { useState, useEffect } from "react";
+import { signIn, logout } from "../../functions/auth";
 import logo from '../../assets/loguito.svg'
 import waveBottom from '../../assets/waveBottom.svg'
 import './Login.scss'
@@ -7,6 +7,17 @@ import './Login.scss'
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  let inactivityTimer;
+
+  // Función para reiniciar el temporizador de inactividad
+  const resetInactivityTimer = () => {
+    clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(() => {
+      console.log("Sesión cerrada por inactividad");
+      logout(); // Cerrar sesión automáticamente
+    }, 60 * 60 * 1000); // 1 hora
+  };
 
   const validateInputs = () => {
     const errors = {};
@@ -21,16 +32,43 @@ export default function Login() {
     return Object.keys(errors).length === 0 ? true : errors;
   };
 
-  const handleLoginUser = () => {
+  // Manejo del inicio de sesión
+  const handleLoginUser = async () => {
     const validationResult = validateInputs();
     if (validationResult === true) {
       console.log("Logging in user...");
-      signIn(email, password);
+      const user = await signIn(email, password);
+      if (user) {
+        localStorage.setItem("loginTime", Date.now()); // Guardar hora de inicio de sesión
+        resetInactivityTimer(); // Iniciar el temporizador
+      }
     } else {
-      alert('Completa el formulario para poder ingresar')
+      alert('Completa el formulario para poder ingresar');
       console.error("Validation errors:", validationResult);
     }
   };
+
+  useEffect(() => {
+    // Detectar eventos del usuario y reiniciar temporizador
+    window.addEventListener("mousemove", resetInactivityTimer);
+    window.addEventListener("keydown", resetInactivityTimer);
+
+    // Revisar si la sesión ya superó 1 hora
+    const checkSessionTimeout = () => {
+      const loginTime = localStorage.getItem("loginTime");
+      if (loginTime && Date.now() - loginTime > 60 * 60 * 1000) {
+        console.log("Sesión expirada");
+        logout();
+      }
+    };
+
+    checkSessionTimeout();
+
+    return () => {
+      window.removeEventListener("mousemove", resetInactivityTimer);
+      window.removeEventListener("keydown", resetInactivityTimer);
+    };
+  });
 
   return (
     <div className="login">
