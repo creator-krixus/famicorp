@@ -1,0 +1,84 @@
+.contributions{
+  position: fixed;
+  height: auto;
+  width: 97%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding-bottom: 30px;
+  margin-top: -82px;
+  &__btn{
+    text-align: right;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 18px;
+  }
+  &__close{
+    cursor: pointer;
+  }
+  &__month, &__pay, &__send{
+      margin: 15px auto;
+      width: 300px;
+      border: 1px solid #658e8b;
+      background: #e7f0f0;
+      color: #5B5957;
+      cursor: pointer;
+      border-radius: 68px;
+      justify-content: center;
+      align-items: center;
+      height: 43px;
+      font-weight: 600;
+      font-size: 20px;
+      display: flex;
+      outline: none;
+      text-decoration: none;
+      &:focus{
+        outline: none;
+      }
+      &:active{
+        outline: none; 
+        box-shadow: none; 
+        -webkit-tap-highlight-color: transparent;
+      }
+  }
+  &__send{
+    width: max-content;
+    padding: 0 30px;
+  }
+  &__form{
+    text-align: center;
+  }
+  &__title{
+    text-transform: capitalize;
+  }
+  &__data{
+    display: flex;
+    flex-direction: column;
+  }
+  &__options{
+    :nth-child(2){
+      margin-left: 16px;
+    }
+  }
+  &__label{
+    padding: 0 8px;
+    font-size: 18px;
+  }
+  &__users, &__amount{
+    margin: 6px;
+    width: 200px;
+    height: 35px;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 8px;
+    outline: none;
+    &:focus{
+      outline: none;
+    }
+  }
+  @media (min-width:450px) {
+      max-width: 440px;
+      margin-top: -150px;
+  }
+}

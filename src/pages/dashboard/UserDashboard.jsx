@@ -5,6 +5,7 @@ import { readAllData } from "../../functions/crud"
 import { useNavigate } from "react-router-dom";
 import UserLogo from '../../assets/user.png'
 import Card from "../../components/cards/Card";
+import Contributions from "../../components/contributions/Contributions";
 import plus from "../../assets/user-plus.png"
 import minus from "../../assets/user-minus.png"
 import './dashboard.scss'
@@ -12,6 +13,7 @@ import './dashboard.scss'
 export default function UserDashboard() {
   const { user } = UserAuth();
   const [data, setData] = useState([]);
+  const [contributions, setContributions] = useState(false);
   const [viewMode, setViewMode] = useState("team");
   const [totalAportes, setTotalAportes] = useState(0);
   const [loans, setLoans] = useState(0);
@@ -38,6 +40,11 @@ export default function UserDashboard() {
       console.error("Error fetching data:", error.message);
     }
   };
+
+  const close = () => {
+    setContributions(false)
+    fetchData()
+  }
 
   useEffect(() => {
     fetchData(); // Llama a fetchData cuando el componente se monta
@@ -80,8 +87,11 @@ export default function UserDashboard() {
       </div>
       {user?.role === "admin" && (
         <div className="dashboard__actions">
-          <img className="dashboard__add" src={plus} alt="Add" />
+          <img className="dashboard__add" src={plus} alt="Add" onClick={() => setContributions(true)} />
           <img className="dashboard__lend" src={minus} alt="Lend" />
+          {contributions && (
+            <Contributions onClose={close} users={data} />
+          )}
         </div>
       )}
       {/* 🔹 Botones para cambiar entre vistas */}
