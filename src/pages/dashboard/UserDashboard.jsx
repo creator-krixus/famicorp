@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { UserAuth } from "../../context/authContext"
+import { UserAuth } from "../../context/authContext";
 import { logout } from "../../functions/auth";
 import { readAllData } from "../../functions/crud"
 import { useNavigate } from "react-router-dom";
 import UserLogo from '../../assets/user.png'
 import Card from "../../components/cards/Card";
 import Contributions from "../../components/contributions/Contributions";
-import plus from "../../assets/user-plus.png"
-import minus from "../../assets/user-minus.png"
-import './dashboard.scss'
+import Loan from "../../components/loan/Loan";
+import plus from "../../assets/user-plus.png";
+import minus from "../../assets/user-minus.png";
+import './dashboard.scss';
 
 export default function UserDashboard() {
   const { user } = UserAuth();
@@ -17,6 +18,7 @@ export default function UserDashboard() {
   const [viewMode, setViewMode] = useState("team");
   const [totalAportes, setTotalAportes] = useState(0);
   const [loans, setLoans] = useState(0);
+  const [modalLoan, setModalLoan] = useState(false);
   const [available, setAvailable] = useState(0)
   const navigate = useNavigate();
 
@@ -44,6 +46,10 @@ export default function UserDashboard() {
   const close = () => {
     setContributions(false)
     fetchData()
+  }
+
+  const closeLoan = () => {
+    setModalLoan(false)
   }
 
   useEffect(() => {
@@ -88,9 +94,12 @@ export default function UserDashboard() {
       {user?.role === "admin" && (
         <div className="dashboard__actions">
           <img className="dashboard__add" src={plus} alt="Add" onClick={() => setContributions(true)} />
-          <img className="dashboard__lend" src={minus} alt="Lend" />
+          <img className="dashboard__lend" src={minus} alt="Lend" onClick={() => setModalLoan(true)} />
           {contributions && (
             <Contributions onClose={close} users={data} />
+          )}
+          {modalLoan && (
+            <Loan onClose={closeLoan} users={data} />
           )}
         </div>
       )}

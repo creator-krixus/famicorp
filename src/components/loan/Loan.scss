@@ -1,0 +1,19 @@
+.loan{
+   position: fixed;
+  height: auto;
+  width: 97%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding-bottom: 30px;
+  margin-top: -100px;
+  &__table{
+    height: 200px;
+    overflow: auto;
+  }
+  @media (min-width:450px) {
+      max-width: 440px;
+      margin-top: -150px;
+  }
+}
