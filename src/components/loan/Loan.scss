@@ -1,19 +1,90 @@
 .loan{
-   position: fixed;
+  position: fixed;
   height: auto;
-  width: 97%;
+  width: 91%;
   border: 1px solid rgba(0, 0, 0, 0.1);
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding-bottom: 30px;
-  margin-top: -100px;
+  padding: 15px 12px 10px;
+  margin-top: -230px;
+  &__header{
+    display: flex;
+    justify-content: space-between;
+  }
+  &__title{
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  &__close{
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  &__label{
+    margin: 3px 0;
+  }
+  &__input, &__users{
+    width: 99%;
+    height: 30px;
+    font-size: 18px;
+    border-radius: 8px;
+    outline: none;
+    border: 1px solid lightgray;
+    &:focus{
+      outline: none;
+    }
+  }
+  &__users{
+    width: 94%;
+  }
+  &__btns{
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+  }
+  &__btn{
+      margin: 10px;
+      width: 300px;
+      border: 1px solid #658e8b;
+      background: #e7f0f0;
+      color: #5B5957;
+      cursor: pointer;
+      border-radius: 68px;
+      justify-content: center;
+      align-items: center;
+      height: 38px;
+      font-weight: 600;
+      font-size: 20px;
+      display: flex;
+      outline: none;
+      text-decoration: none;
+      &:focus{
+        outline: none;
+      }
+      &:active{
+        outline: none; 
+        box-shadow: none; 
+        -webkit-tap-highlight-color: transparent;
+      }
+  }
   &__table{
-    height: 200px;
+    text-align: center;
+    height: 350px;
     overflow: auto;
   }
+  &__info{
+    width: 100%;
+  }
   @media (min-width:450px) {
-      max-width: 440px;
-      margin-top: -150px;
+    max-width: 410px;
+    &__table{
+      height: 200px;
+      overflow: auto;
+    }
+    &__btn{
+      margin: 10px auto;
+    }
   }
 }

@@ -50,6 +50,7 @@ export default function UserDashboard() {
 
   const closeLoan = () => {
     setModalLoan(false)
+    fetchData()
   }
 
   useEffect(() => {
@@ -139,6 +140,7 @@ export default function UserDashboard() {
                     loan={user.loan}
                     aportes={user.aportes}
                     percentage={totalAportes}
+                    totalPayLoan={user.totalPayLoan}
                     isLoanView="loan"
                   />
                 ))

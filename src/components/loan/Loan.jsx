@@ -45,8 +45,16 @@ export default function Loan({ onClose, users }) {
     const total = calculateInstallments();
 
     try {
-      await updateData("users", user.uid, { loan: total });
+      await updateData("users", user.uid, {
+        loan: amount, totalPayLoan: {
+          amount: total,
+          months: months,
+          quota: total / months
+        }
+      });
       alert("Datos actualizados correctamente");
+      setInstallments([]);
+      handleReset()
     } catch (error) {
       console.error("Error actualizando datos", error);
     }
@@ -63,21 +71,23 @@ export default function Loan({ onClose, users }) {
   return (
     <div className="loan">
       <div className="loan__header">
-        <h2>Simulador de Préstamo</h2>
+        <div className="loan__title"></div>
         <div className="loan__close" onClick={onClose}>Cerrar</div>
       </div>
       <div className="loan__form">
-        <label>Monto del préstamo:</label>
-        <input type="number" value={amount} onChange={(e) => setAmount(Number(e.target.value))} />
-        <label>Meses:</label>
-        <input type="number" value={months} onChange={(e) => setMonths(Number(e.target.value))} />
-        <button onClick={calculateInstallments}>Calcular</button>
-        <button onClick={handleReset}>Limpiar Campos</button>
+        <p className="loan__label">Monto del préstamo:</p>
+        <input className="loan__input" value={amount} onChange={(e) => setAmount(Number(e.target.value))} />
+        <p className="loan__label">Meses:</p>
+        <input className="loan__input" value={months} onChange={(e) => setMonths(Number(e.target.value))} />
+        <section className="loan__btns">
+          <button className="loan__btn" onClick={calculateInstallments}>Calcular</button>
+          <button className="loan__btn" onClick={handleReset}>Limpiar</button>
+        </section>
       </div>
       {installments.length > 0 && (
         <div className="loan__table">
-          <div>Tabla de Amortización</div>
-          <table>
+          <div className="loan__title">Tabla de Amortización</div>
+          <table className="loan__info">
             <thead>
               <tr>
                 <th>Mes</th>
@@ -91,23 +101,22 @@ export default function Loan({ onClose, users }) {
               {installments.map(row => (
                 <tr key={row.month}>
                   <td>{row.month}</td>
-                  <td>{row.cuota}</td>
-                  <td>{row.interest}</td>
-                  <td>{row.principal}</td>
-                  <td>{row.remainingDebt}</td>
+                  <td>{row.cuota.toLocaleString("es-ES")}</td>
+                  <td>{row.interest.toLocaleString("es-ES")}</td>
+                  <td>{row.principal.toLocaleString("es-ES")}</td>
+                  <td>{row.remainingDebt.toLocaleString("es-ES")}</td>
                 </tr>
               ))}
             </tbody>
           </table>
-          <h4>Total Pagado: {totalPaid}</h4>
-          <label>Usuario:</label>
-          <select value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
+          <h4>Total a pagar: {totalPaid.toLocaleString("es-ES")}</h4>
+          <select className="loan__users" value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
             <option value="">Seleccionar usuario</option>
             {users.map(user => (
               <option key={user.uid} value={`${user.firstName} ${user.lastName}`}>{user.firstName} {user.lastName}</option>
             ))}
           </select>
-          <button onClick={handleUpdate}>Actualizar Base de Datos</button>
+          <button className="loan__btn" onClick={handleUpdate}>Generar préstamo</button>
         </div>
       )}
     </div>
