@@ -32,11 +32,15 @@ export default function UserDashboard() {
         return sum + (user.aportes?.reduce((acc, num) => acc + num, 0) || 0);
       }, 0);
       setTotalAportes(total);
-      // Obtiene todos los préstamos
-      const allLoans = result.map(user => user.loan || []).flat().reduce((acc, num) => acc + num, 0) || 0;
+      // Obtiene todos los préstamos con intereses
+      const allLoans = result.map(user => user.totalPayLoan?.amount || []).flat().reduce((acc, num) => acc + num, 0) || 0;
       setLoans(allLoans);
+      // Obtiene todos los préstamos reales
+      const allLoansReal = result.map(user => user.loan || []).flat().reduce((acc, num) => acc + num, 0) || 0;
+      //Obtiene todos los abonos a prestamos
+      const allPayLoans = result.map(user => user.payLoan || []).flat().reduce((acc, num) => acc + num, 0) || 0
       //Obtine lo disponible
-      setAvailable(total - allLoans)
+      setAvailable(total - allLoansReal + allPayLoans)
 
     } catch (error) {
       console.error("Error fetching data:", error.message);
@@ -78,8 +82,14 @@ export default function UserDashboard() {
           <img className='dashboard__photo' src={user?.photoURL || UserLogo}></img>
         </div>
         <div className="dashboard__infoMoney">
-          <div>Total ahorrado</div>
-          <div className="dashboard__cash">${totalAportes.toLocaleString("es-ES")}</div>
+          <div>
+            <div>Total ahorrado</div>
+            <div className="dashboard__cash">${totalAportes.toLocaleString("es-ES")}</div>
+          </div>
+          <div>
+            <div>Ganancias</div>
+            <div className="dashboard__cash">${(loans + available - totalAportes).toLocaleString("es-ES")}</div>
+          </div>
         </div>
         <div className="dashboard__cards">
           <div className="dashboard__free">

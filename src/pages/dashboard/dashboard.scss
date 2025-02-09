@@ -30,6 +30,8 @@
     cursor: pointer;
   }
   &__infoMoney{
+    display: flex;
+    justify-content: space-between;
     margin: 25px 0;
   }
   &__cash{
