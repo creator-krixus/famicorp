@@ -17,10 +17,6 @@ export default function Contributions({ onClose, users }) {
   };
 
   const handleUpdate = async () => {
-    console.log("Opción seleccionada:", selectedOption);
-    console.log("Usuario seleccionado:", selectedUser);
-    console.log("Monto seleccionado:", selectedAmount);
-
     if (!selectedUser || !selectedAmount) {
       alert('Faltan datos para completar esta accion')
       console.error("Debe seleccionar un usuario y un monto.");
@@ -55,9 +51,13 @@ export default function Contributions({ onClose, users }) {
       // Si es un pago de préstamo, restar la cantidad del préstamo
       if (selectedOption === "pago prestamo") {
         const lastPayment = updatedData.payLoan[updatedData.payLoan.length - 1];
-        const updatedLoan = userData.loan - lastPayment; // Restar el pago al préstamo original
+        const updatedLoan = userData.totalPayLoan.amount - lastPayment; // Restar el pago al préstamo original
 
-        updatedData.loan = updatedLoan; // Actualizar el campo `loan` con el nuevo valor
+        updatedData.totalPayLoan = {
+          ...userData.totalPayLoan,
+          amount: updatedLoan,
+          months: userData.totalPayLoan.months - 1
+        }; // Actualizar el campo `loan` con el nuevo valor
       }
 
       // Enviar la actualización a Firebase
