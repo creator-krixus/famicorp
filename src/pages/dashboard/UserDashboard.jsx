@@ -15,6 +15,7 @@ import './dashboard.scss';
 export default function UserDashboard() {
   const { user } = UserAuth();
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);  // Estado de carga
   const [contributions, setContributions] = useState(false);
   const [viewMode, setViewMode] = useState("team");
   const [settings, setSettings] = useState(false);
@@ -26,6 +27,7 @@ export default function UserDashboard() {
 
   // Función para obtener datos de Firestore
   const fetchData = async () => {
+    setLoading(true); // Activa el estado de carga
     try {
       const result = await readAllData("users");
       setData(result);
@@ -46,6 +48,8 @@ export default function UserDashboard() {
 
     } catch (error) {
       console.error("Error fetching data:", error.message);
+    } finally {
+      setLoading(false); // Desactiva el estado de carga
     }
   };
 
@@ -80,6 +84,12 @@ export default function UserDashboard() {
   };
   return (
     <>
+      {loading && (
+        <div className="loader-container">
+          <div className="spinner"></div>
+          <p>Cargando datos...</p>
+        </div>
+      )}
       <div className='dashboard'>
         <div className='dashboard__close' onClick={handlerLogout}>Salir</div>
         <div className="dashboard__data">
