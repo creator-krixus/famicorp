@@ -4,8 +4,8 @@ import { updateData } from "../../functions/crud";
 import "./Loan.scss";
 
 export default function Loan({ onClose, users }) {
-  const [amount, setAmount] = useState(50000);
-  const [months, setMonths] = useState(1);
+  const [amount, setAmount] = useState(0);
+  const [months, setMonths] = useState(0);
   const interestRate = 0.018;
   const [selectedUser, setSelectedUser] = useState("");
   const [installments, setInstallments] = useState([]);
@@ -61,8 +61,8 @@ export default function Loan({ onClose, users }) {
   };
 
   const handleReset = () => {
-    setAmount(50000);
-    setMonths(1);
+    setAmount(0);
+    setMonths(0);
     setSelectedUser("");
     setInstallments([]);
     setTotalPaid(0);
