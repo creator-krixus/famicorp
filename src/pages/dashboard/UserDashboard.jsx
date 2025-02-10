@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import UserLogo from '../../assets/user.png'
 import Card from "../../components/cards/Card";
 import Contributions from "../../components/contributions/Contributions";
+import Settings from "../../components/userSettings/UserSettings"
 import Loan from "../../components/loan/Loan";
 import plus from "../../assets/user-plus.png";
 import minus from "../../assets/user-minus.png";
@@ -16,6 +17,7 @@ export default function UserDashboard() {
   const [data, setData] = useState([]);
   const [contributions, setContributions] = useState(false);
   const [viewMode, setViewMode] = useState("team");
+  const [settings, setSettings] = useState(false);
   const [totalAportes, setTotalAportes] = useState(0);
   const [loans, setLoans] = useState(0);
   const [modalLoan, setModalLoan] = useState(false);
@@ -52,6 +54,10 @@ export default function UserDashboard() {
     fetchData()
   }
 
+  const closeSettings = () => {
+    setSettings(false)
+  }
+
   const closeLoan = () => {
     setModalLoan(false)
     fetchData()
@@ -79,8 +85,11 @@ export default function UserDashboard() {
         <div className="dashboard__data">
           <div className='dashboard__user'>Hola, {getFirstName()}
           </div>
-          <img className='dashboard__photo' src={user?.photoURL || UserLogo}></img>
+          <img className='dashboard__photo' src={user?.photoURL || UserLogo} onClick={() => setSettings(true)}></img>
         </div>
+        {settings && (
+          <Settings onClose={closeSettings} user={user} />
+        )}
         <div className="dashboard__infoMoney">
           <div>
             <div>Total ahorrado</div>
