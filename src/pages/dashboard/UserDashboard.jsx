@@ -167,6 +167,7 @@ export default function UserDashboard() {
                     lastName={user.lastName}
                     photo={user.photoURL || UserLogo}
                     loan={user.loan}
+                    loanDate={user.totalPayLoan.date}
                     aportes={user.aportes}
                     percentage={totalAportes}
                     totalPayLoan={user.totalPayLoan}
