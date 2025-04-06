@@ -43,13 +43,20 @@ export default function Loan({ onClose, users }) {
     }
 
     const total = calculateInstallments();
+    const now = new Date();
+    const loanDate = {
+      seconds: Math.floor(now.getTime() / 1000),
+      nanoseconds: (now.getTime() % 1000) * 1e6
+    };
 
     try {
       await updateData("users", user.uid, {
-        loan: amount, totalPayLoan: {
+        loan: amount,
+        totalPayLoan: {
           amount: total,
           months: months,
-          quota: total / months
+          quota: total / months,
+          date: loanDate
         }
       });
       alert("Datos actualizados correctamente");

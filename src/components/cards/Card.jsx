@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import "./Card.scss";
 
-export default function Card({ name, photo, aportes, percentage, lastName, loan, isLoanView, totalPayLoan }) {
+export default function Card({ name, photo, aportes, percentage, lastName, loan, isLoanView, totalPayLoan, loanDate }) {
   // Convertir la cadena "loan" en un booleano
   const isLoanMode = isLoanView === "loan";
 
@@ -12,6 +12,15 @@ export default function Card({ name, photo, aportes, percentage, lastName, loan,
   const formattedAmount = totalPayLoan?.amount ? totalPayLoan?.amount.toLocaleString("es-ES") : 0;
   const formattedTime = totalPayLoan?.months
   const formattedQuota = totalPayLoan?.quota.toLocaleString("es-ES")
+
+  const formattedDate = loanDate
+    ? new Date(loanDate.seconds * 1000).toLocaleDateString("es-ES", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    })
+    : null;
+
 
   return (
     <div className="card">
@@ -24,6 +33,7 @@ export default function Card({ name, photo, aportes, percentage, lastName, loan,
           {isLoanMode ? (
             <div className="card__loan">
               <div>Préstamo: ${formattedLoan}</div>
+              <div>Fecha del préstamo: {formattedDate}</div>
               <div>Total a pagar: ${formattedAmount}</div>
               <div>Cuotas: {formattedTime}</div>
               <div>Valor cuota: ${formattedQuota}</div>
@@ -50,6 +60,7 @@ Card.propTypes = {
   percentage: PropTypes.number.isRequired,
   loan: PropTypes.number,
   isLoanView: PropTypes.string,
-  totalPayLoan: PropTypes.object
+  totalPayLoan: PropTypes.object,
+  loanDate: PropTypes.string // nueva prop
 };
 
