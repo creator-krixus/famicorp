@@ -106,7 +106,15 @@ export default function Contributions({ onClose, users }) {
               <select className="contributions__users" value={selectedUser} onChange={(e) => setSelectedUser(e.target.value)}>
                 <option value="">Seleccionar usuario</option>
                 {users
-                  .filter(user => selectedOption !== "pago prestamo" || user.loan > 0) // Filtra usuarios con loan > 0
+                  .filter(user => {
+                    if (selectedOption === "aporte mensual") {
+                      return user.role === "user" || user.role === "admin";
+                    }
+                    if (selectedOption === "pago prestamo") {
+                      return user.loan > 0;
+                    }
+                    return true;
+                  })
                   .map(user => (
                     <option key={user.uid} value={`${user.firstName} ${user.lastName}`}>
                       {user.firstName} {user.lastName}
