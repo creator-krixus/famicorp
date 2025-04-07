@@ -134,15 +134,21 @@ export default function UserDashboard() {
         </div>
       )}
       {/* 🔹 Botones para cambiar entre vistas */}
+      {/* <div className="dashboard__filters">
+        <span className={viewMode === 'team' ? 'dashboard__active' : 'dashboard__team'} onClick={() => setViewMode("team")}>Socios</span>
+        <span className={viewMode === 'loan' ? 'dashboard__active' : 'dashboard__loan'} onClick={() => setViewMode("loan")}>Préstamos</span>
+      </div> */}
       <div className="dashboard__filters">
         <span className={viewMode === 'team' ? 'dashboard__active' : 'dashboard__team'} onClick={() => setViewMode("team")}>Socios</span>
         <span className={viewMode === 'loan' ? 'dashboard__active' : 'dashboard__loan'} onClick={() => setViewMode("loan")}>Préstamos</span>
+        <span className={viewMode === 'clients' ? 'dashboard__active' : 'dashboard__clients'} onClick={() => setViewMode("clients")}>Clientes</span>
       </div>
+
       {/* 🔹 Mostrar contenido según el valor de "viewMode" */}
       <div className="dashboard__dataList">
         {viewMode === "team" ? (
           data.length > 0 ? (
-            data.map((user) => (
+            data.filter(user => user.role === "user" || user.role === "admin").map((user) => (
               <Card
                 key={user.uid}
                 name={user.firstName}
@@ -177,6 +183,22 @@ export default function UserDashboard() {
             ) : (
               <p>No hay usuarios con préstamos</p>
             )}
+          </div>
+        ) : viewMode === "clients" ? (
+          <div>
+            {/* Aquí va el contenido de la vista de clientes */}
+            {data
+              .filter(user => user.role === "client") 
+              .map((user) => (
+                <Card
+                  key={user.uid}
+                  name={user.firstName}
+                  lastName={user.lastName}
+                  photo={user.photoURL || UserLogo}
+                  // aportes={user.aportes}
+                  percentage={totalAportes}
+                />
+              ))}
           </div>
         ) : null}
       </div>
